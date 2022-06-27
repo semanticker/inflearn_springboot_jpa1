@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: jdbc:h2:/Users/asdfiop1517/Workspace/java/inflearn_springboot_jpa1/jpashop
+    #url: jdbc:h2:./jpashop
+    url: jdbc:h2:tcp://localhost/./jpashop
     username: sa
-    password:
+    password: 1
     driver-class-name: org.h2.Driver
 
   jpa:
@@ -16,3 +17,4 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
+    org.hibernate.type: trace
