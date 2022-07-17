@@ -33,8 +33,11 @@ public class OrderRepository {
         // 동적 쿼리로 해결하는 방법 1
         //return findAllWithDynamicStringQuery(orderSearch);
 
+        // JPA 표준인 Criteria를 이용하는 방법
         return findAllWithCriteria(orderSearch);
 
+        // QueryDSL을 이용하는 방법
+        //return findAllWithQueryDSL(orderSearch);
 
 /*
         return em.createQuery("select o from Order o join o.member m" +
@@ -45,6 +48,10 @@ public class OrderRepository {
                 .setMaxResults(1000)
                 .getResultList();*/
 
+    }
+
+    private List<Order> findAllWithQueryDSL(OrderSearch orderSearch) {
+        return null;
     }
 
     /**
