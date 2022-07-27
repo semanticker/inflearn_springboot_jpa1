@@ -64,9 +64,10 @@ public class ItemController {
 
     // 수정할때 변경감지, 병합
     @PostMapping("items/{itemId}/edit")
-    public String updateItem(@PathVariable String itemId, @ModelAttribute("form") BookForm form) {
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
 
-        Book book = new Book();
+        // Controller에서 엔티티 생성은 권장하지 않음.
+        /*Book book = new Book();
 
         book.setId(form.getId());
         book.setName(form.getName());
@@ -76,6 +77,10 @@ public class ItemController {
         book.setIsbn(form.getIsbn());
 
         itemService.saveItem(book);
+         */
+
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+
         return "redirect:/items";
     }
 
