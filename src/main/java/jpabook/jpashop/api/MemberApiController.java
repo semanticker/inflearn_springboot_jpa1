@@ -20,6 +20,20 @@ public class MemberApiController {
         Long id = memberService.join(member);
         return new CreateMemberReponse(id);
     }
+    @PostMapping("/api/v2/members")
+    public CreateMemberReponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
+
+        Member member = new Member();
+        member.setName(request.getName());
+
+        Long id = memberService.join(member);
+        return new CreateMemberReponse(id);
+    }
+
+    @Data
+    static class CreateMemberRequest {
+        private String name;
+    }
 
     @Data
     static class CreateMemberReponse {
