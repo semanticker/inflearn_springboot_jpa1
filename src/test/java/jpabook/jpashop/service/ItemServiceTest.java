@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 @SpringBootTest
 @Transactional
 public class ItemServiceTest {
-
     @Autowired ItemService itemService;
     @Autowired ItemRepository itemRepository;
     @Autowired EntityManager em;
