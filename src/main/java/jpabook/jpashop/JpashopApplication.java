@@ -14,16 +14,14 @@ public class JpashopApplication {
 
 	@Bean
 	Hibernate5Module hibernate5Module() {
-
 		// case1
 		//return new hibernate5Module();
 
 		// case2
 		Hibernate5Module hibernate5Module = new Hibernate5Module();
-		hibernate5Module.configure(Hibernate5Module.Feature.FORCE_LAZY_LOADING, true);
+		// 아래 옵션은 되도록 사용하면 안됨.
+		//hibernate5Module.configure(Hibernate5Module.Feature.FORCE_LAZY_LOADING, true);
 
 		return hibernate5Module;
 	}
-
-
 }
