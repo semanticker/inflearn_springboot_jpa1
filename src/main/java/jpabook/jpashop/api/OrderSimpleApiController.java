@@ -28,6 +28,30 @@ public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
 
+    @GetMapping("/api/v2/simple-orders")
+    public List<SimpleOrderDTO> ordersV2() {
+        // N + 1 -> N(2) + 1
+        // 1 + 회원 N + 배송 N
+        List<Order> orders = orderRepository.findAll(new OrderSearch());
+
+        List<SimpleOrderDTO> result = orders.stream()
+                .map(o -> new SimpleOrderDTO(o))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    // fetch join version
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDTO> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+        List<SimpleOrderDTO> result = orders.stream()
+                .map(o -> new SimpleOrderDTO(o))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
     @GetMapping("/api/v1/simple-orders")
     public List<Order> ordersV1() {
         List<Order> all = orderRepository.findAll(new OrderSearch());
@@ -36,16 +60,6 @@ public class OrderSimpleApiController {
             order.getDelivery().getAddress(); // Lazy 강제 초기화
         }
         return all;
-    }
-    @GetMapping("/api/v2/simple-orders")
-    public List<SimpleOrderDTO> ordersV2() {
-        List<Order> orders = orderRepository.findAll(new OrderSearch());
-
-        List<SimpleOrderDTO> result = orders.stream()
-                .map(o -> new SimpleOrderDTO(o))
-                .collect(Collectors.toList());
-
-        return result;
     }
 
     @Data
@@ -58,10 +72,10 @@ public class OrderSimpleApiController {
 
         public SimpleOrderDTO(Order order) {
             orderId = order.getId();
-            name = order.getMember().getName();
+            name = order.getMember().getName(); // lazy 초기화
             orderDate = order.getOrderDate();
             orderStatus = order.getStatus();
-            address = order.getDelivery().getAddress();
+            address = order.getDelivery().getAddress(); // lazy 초기화
         }
     }
 
