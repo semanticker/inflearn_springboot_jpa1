@@ -5,6 +5,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
+import jpabook.jpashop.repository.OrderSimpleQueryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.aspectj.weaver.ast.Or;
@@ -28,12 +29,17 @@ public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
 
-    @GetMapping("/api/v2/simple-orders")
-    public List<SimpleOrderDTO> ordersV2() {
-        // N + 1 -> N(2) + 1
-        // 1 + 회원 N + 배송 N
-        List<Order> orders = orderRepository.findAll(new OrderSearch());
 
+
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDTO> findOrderDtos() {
+        return orderRepository.findOrderDtos();
+    }
+
+    // fetch join version
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDTO> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
         List<SimpleOrderDTO> result = orders.stream()
                 .map(o -> new SimpleOrderDTO(o))
                 .collect(Collectors.toList());
@@ -41,10 +47,13 @@ public class OrderSimpleApiController {
         return result;
     }
 
-    // fetch join version
-    @GetMapping("/api/v3/simple-orders")
-    public List<SimpleOrderDTO> ordersV3() {
-        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+
+    @GetMapping("/api/v2/simple-orders")
+    public List<SimpleOrderDTO> ordersV2() {
+        // N + 1 -> N(2) + 1
+        // 1 + 회원 N + 배송 N
+        List<Order> orders = orderRepository.findAll(new OrderSearch());
+
         List<SimpleOrderDTO> result = orders.stream()
                 .map(o -> new SimpleOrderDTO(o))
                 .collect(Collectors.toList());
