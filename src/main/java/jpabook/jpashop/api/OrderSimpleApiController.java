@@ -6,6 +6,7 @@ import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
 import jpabook.jpashop.repository.OrderSimpleQueryDTO;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.aspectj.weaver.ast.Or;
@@ -29,11 +30,13 @@ public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
 
+    private final OrderSimpleQueryRepository orderSimpleQueryRepository;
+
 
 
     @GetMapping("/api/v4/simple-orders")
-    public List<OrderSimpleQueryDTO> findOrderDtos() {
-        return orderRepository.findOrderDtos();
+    public List<OrderSimpleQueryDTO> ordersV4() {
+        return orderSimpleQueryRepository.findOrderDtos();
     }
 
     // fetch join version
