@@ -66,6 +66,7 @@ public class OrderApiController {
             this.orderDate = order.getOrderDate();
             this.orderStatus = order.getStatus();
             this.address = order.getDelivery().getAddress();
+            order.getOrderItems().stream().forEach(o->o.getItem().getName());
             this.orderItems = order.getOrderItems();
         }
     }
