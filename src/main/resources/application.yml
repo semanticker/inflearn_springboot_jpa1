@@ -1,14 +1,14 @@
 spring:
   datasource:
-    url: jdbc:h2:./jpashop
-    #url: jdbc:h2:tcp://localhost/./jpashop
+    #url: jdbc:h2:./jpashop
+    url: jdbc:h2:tcp://localhost/~/test
     username: sa
-    password: 1
+    password:
     driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
-      ddl-auto: auto #none #auto
+      ddl-auto: create #none #auto
     properties:
       hibernate:
         show_sql: true
