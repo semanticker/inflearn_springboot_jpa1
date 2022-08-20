@@ -22,6 +22,7 @@ OrderItem {
     private Long id;
 
 
+    // @BatchSize 설정하면 안됨
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
