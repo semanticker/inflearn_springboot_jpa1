@@ -13,16 +13,14 @@ public class OrderQueryRepository {
 
     private final EntityManager em;
 
-
     public List<OrderQueryDto> findOrders() {
-        em.createQuery(
+        return em.createQuery(
                 //"select from Order o" +
                 "select new jpabook.jpashop.repository.order.query.OrderQueryDto(o.id, m.name, o.orderDate, o.status, d.address)" +
                 " from Order o" +
                 " join o.member m" +
                 " join o.delivery d", OrderQueryDto.class)
                 .getResultList();
-        return null;
     }
 
     public List<OrderQueryDto> findOrderQueryDtos() {
